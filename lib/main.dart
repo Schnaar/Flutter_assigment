@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:geolocator/geolocator.dart';
+
 
 void main() => runApp(const BottomNavigationBarExampleApp());
 
@@ -10,7 +12,18 @@ class BottomNavigationBarExampleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.transparent,
+      ),
+    );
+
+    return MaterialApp(
+      title: 'Roberts rodeo',
+      themeMode: ThemeMode.system, // Use the system theme mode
+      theme: ThemeData.light(), // Default light theme
+      darkTheme: ThemeData.dark(), // Default dark theme
       home: BottomNavigationBarExample(),
     );
   }
@@ -64,7 +77,7 @@ class _BottomNavigationBarExampleState
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            label: 'School',
+            label: 'Fun Screen',
             backgroundColor: Colors.purple,
           ),
           BottomNavigationBarItem(
@@ -81,15 +94,65 @@ class _BottomNavigationBarExampleState
   }
 }
 
-class HomeScreen extends StatelessWidget {
+
+class HomeScreen extends StatefulWidget {
+  @override
+  _GeolocationDemoState createState() => _GeolocationDemoState();
+}
+
+class _GeolocationDemoState extends State<HomeScreen> {
+  String _locationMessage = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _getLocation();
+  }
+
+  _getLocation() async {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error('Location Not Available');
+      }
+    }
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    setState(() {
+      _locationMessage =
+      "Latitude: ${position.latitude}, Longitude: ${position.longitude}";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
       ),
       body: Center(
-        child: Text('Home Screen'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.location_on,
+              size: 60.0,
+              color: Colors.blue,
+            ),
+            SizedBox(height: 20.0),
+            Text(
+              'Your Current Location is:',
+              style: TextStyle(fontSize: 20.0),
+            ),
+            SizedBox(height: 10.0),
+            Text(
+              _locationMessage,
+              style: TextStyle(fontSize: 16.0),
+            ),
+          ],
+        ),
       ),
     );
   }
