@@ -217,6 +217,12 @@ class DetailScreen extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Text(item['capacity'].toString()),
+            SizedBox(height: 20),
+            Text(
+              'Wait time:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(item['wait time'].toString()),
           ],
         ),
       ),
