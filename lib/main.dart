@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 void main() => runApp(const BottomNavigationBarExampleApp());
 
@@ -44,7 +45,7 @@ class _BottomNavigationBarExampleState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
+        title: const Text('Roberts rodeo'),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -151,9 +152,19 @@ class _ThemeParkScreenState extends State<ThemeParkScreen> {
   }
 
   Future<void> loadRidesAndGardens() async {
-    String data = await rootBundle.loadString('assets/rides_and_gardens.json');
+    var response;
+    try {
+      response = await http.get(Uri.parse('gs://rides-and-gardens.appspot.com'));
+    } catch (e) {
+      print('Failed to fetch data from API. Loading offline data...');
+      // Load data from local JSON file if offline
+      response = await rootBundle.loadString('assets/rides_and_gardens.json');
+
+    }
+
+
     setState(() {
-      ridesAndGardens = json.decode(data);
+      ridesAndGardens = json.decode(response);
     });
   }
 
@@ -223,6 +234,8 @@ class DetailScreen extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Text(item['wait time'].toString()),
+            SizedBox(height: 60),
+            Image(image: AssetImage('assets/Images/${item["image"]}')),
           ],
         ),
       ),

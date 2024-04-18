@@ -4,28 +4,32 @@
       "description": "Roller Coaster ",
       "location": "Venue 1",
       "capacity": 100,
-	  "wait time":"~20 minutes"
+	  "wait time":"~30 minutes",
+	  "image":"RollerCoaster.jpg"
     },
     {
       "name": "Themed Garden 1 : Rose Garden",
       "description": "Rose Garden",
       "location": "St-Anne Street, Victoria Park",
       "capacity": 50,
-	  "wait time":"~5 minutes"
+	  "wait time":"~5 minutes",
+	  "image":"RoseGarden.webp"
     },
     {
         "name": "Ride 2 : Carousel",
         "description": "Carousel",
         "location": "Venue 2",
         "capacity": 40,
-		"wait time":"~10 minutes"
+		"wait time":"~10 minutes",
+		"image":"carousel.avif"
       },
       {
-        "name": "Themed Garden 2 : Tullip Garden",
-        "description": "Tullip Garden",
+        "name": "Themed Garden 2 : Lakeside Garden",
+        "description": "Lakeside Garden",
         "location": "Queen Elizabeth Street, Kew Garden",
         "capacity": 100,
-		"wait time":"No wait time"
+		"wait time":"No wait time",
+		"image":"Lakeside.jpg"
       }
     ,
     {
@@ -33,29 +37,34 @@
       "description": "Bumper car",
       "location": "Venue 3",
       "capacity": 50,
-	  "wait time":"~10 minutes"
+	  "wait time":"~10 minutes",
+	  "image":"Bumper.jpg"
     },
     {
-      "name": "Themed Garden 3 : Zen Garden",
+      "name": "Themed Garden 3 : Sculpture Garden",
       "description": "Zen Garden",
       "location": "Princess Margareth Street, Kew Garden",
       "capacity": 200,
-	  "wait time":"~5 minutes"
+	  "wait time":"~5 minutes",
+	  "image":"Sculpture.jpg"
+	  
     }
     ,
     {
-      "name": "Ride 4 : Ferris Wheel",
-      "description": "Ferris Wheel",
+      "name": "Ride 4 : VR Roller Coaster",
+      "description": "VR RollerCoaster",
       "location": "Venue 4",
       "capacity": 90,
-	  "wait time":"~15 minutes"
+	  "wait time":"~15 minutes",
+	  "image":"VR.jpg"
     },
     {
-      "name": "Themed Garden 4 : Tropical Garden",
-      "description": "Tropical Garden",
+      "name": "Themed Garden 4 : The Outpost",
+      "description": "The Outpost",
       "location": "Queen Adelaide Street, Kew Garden",
       "capacity": 140,
-	  "wait time":"normally no wait time"
+	  "wait time":"normally no wait time",
+	  "image":"outpost.jpg"
     }
     ,
     {
@@ -63,14 +72,16 @@
       "description": "Haunted House",
       "location": "Venue 5",
       "capacity": 80,
-	  "wait time":"~20 minutes"
+	  "wait time":"~20 minutes",
+	  "image":"hauntedHouse.jpg"
     },
     {
       "name": "Themed Garden 5 : Sunflower Garden",
       "description": "Sunflower Garden",
       "location": "Queen Mary Street, Kew Garden",
       "capacity": 120,
-	  "wait time":"~5 minutes"
+	  "wait time":"~5 minutes",
+	  "image":"sunflower.png"
     }
     ,
     {
@@ -78,14 +89,16 @@
       "description": "Water Rides",
       "location": "Venue 6",
       "capacity": 76,
-	  "wait time": "~30 minutes"
+	  "wait time": "~30 minutes",
+	  "image":"flume.jpg"
     },
     {
       "name": "Themed Garden 6 : Lavender Garden",
       "description": "Lavender Garden",
       "location": "Princess Diana Street, Kew Garden",
       "capacity": 123,
-	  "wait time": "~5 minutes"
+	  "wait time": "~5 minutes",
+	  "image":"Lavender"
     }
   
   ]
