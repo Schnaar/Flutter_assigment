@@ -1,0 +1,79 @@
+[
+    {
+      "name": "Ride 1 : Roller Coaster",
+      "description": "Roller Coaster ",
+      "location": "Venue 1",
+      "capacity": 100
+    },
+    {
+      "name": "Themed Garden 1 : Rose Garden",
+      "description": "Rose Garden",
+      "location": "St-Anne Street, Victoria Park",
+      "capacity": 50
+    },
+    {
+        "name": "Ride 2 : Carousel",
+        "description": "Carousel",
+        "location": "Venue 2",
+        "capacity": 40
+      },
+      {
+        "name": "Themed Garden 2 : Tullip Garden",
+        "description": "Tullip Garden",
+        "location": "Queen Elizabeth Street, Kew Garden",
+        "capacity": 100
+      }
+    ,
+    {
+      "name": "Ride 3 : Bumper car",
+      "description": "Bumper car",
+      "location": "Venue 3",
+      "capacity": 50
+    },
+    {
+      "name": "Themed Garden 3 : Zen Garden",
+      "description": "Zen Garden",
+      "location": "Princess Margareth Street, Kew Garden",
+      "capacity": 200
+    }
+    ,
+    {
+      "name": "Ride 4 : Ferris Wheel",
+      "description": "Ferris Wheel",
+      "location": "Venue 4",
+      "capacity": 90
+    },
+    {
+      "name": "Themed Garden 4 : Tropical Garden",
+      "description": "Tropical Garden",
+      "location": "Queen Adelaide Street, Kew Garden",
+      "capacity": 140
+    }
+    ,
+    {
+      "name": "Ride 5 : Haunted House",
+      "description": "Haunted House",
+      "location": "Venue 5",
+      "capacity": 80
+    },
+    {
+      "name": "Themed Garden 5 : Sunflower Garden",
+      "description": "Sunflower Garden",
+      "location": "Queen Mary Street, Kew Garden",
+      "capacity": 120
+    }
+    ,
+    {
+      "name": "Ride 6 : Water Rides",
+      "description": "HWater Rides",
+      "location": "Venue 6",
+      "capacity": 76
+    },
+    {
+      "name": "Themed Garden 6 : Lavender Garden",
+      "description": "Lavender Garden",
+      "location": "Princess Diana Street, Kew Garden",
+      "capacity": 123
+    }
+  
+  ]

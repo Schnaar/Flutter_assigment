@@ -1,74 +1,81 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const BottomNavigationBarExampleApp());
 
-class MyApp extends StatelessWidget {
+class BottomNavigationBarExampleApp extends StatelessWidget {
+  const BottomNavigationBarExampleApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Bottom Navigation Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
+    return const MaterialApp(
+      home: BottomNavigationBarExample(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class BottomNavigationBarExample extends StatefulWidget {
+  const BottomNavigationBarExample({Key? key}) : super(key: key);
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  State<BottomNavigationBarExample> createState() =>
+      _BottomNavigationBarExampleState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 0;
+class _BottomNavigationBarExampleState
+    extends State<BottomNavigationBarExample> {
+  int _selectedIndex = 0;
 
-  final List<Widget> _tabs = [
+  static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    FavoritesScreen(),
-    ProfileScreen(),
-    RestaurantsScreen(),
+    ThemeParkScreen(),
+    SchoolScreen(),
+    SettingsScreen(),
   ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bottom Navigation Demo'),
+        title: const Text('BottomNavigationBar Sample'),
       ),
-      bottomNavigationBar: Container(
-  decoration: BoxDecoration(
-    color: Color(0xFFE7C6FF), // Background color
-  ),
-  child: BottomNavigationBar(
-    currentIndex: _currentIndex,
-    onTap: (int index) {
-      setState(() {
-        _currentIndex = index;
-      });
-    },
-    items: [
-      BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        label: 'Home',
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.favorite),
-        label: 'Rides',
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+            backgroundColor: Colors.red,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Rides',
+            backgroundColor: Colors.green,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'School',
+            backgroundColor: Colors.purple,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+            backgroundColor: Colors.pink,
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.quiz),
-        label: 'Fun page',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.restaurant),
-        label: 'Restaurants',
-      ),
-    ],
-    unselectedItemColor: Colors.black,
-    selectedItemColor: Colors.indigo,
-  ),
-),
     );
   }
 }
@@ -76,34 +83,143 @@ class _MyHomePageState extends State<MyHomePage> {
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Home Screen'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+      ),
+      body: Center(
+        child: Text('Home Screen'),
+      ),
     );
   }
 }
 
-class FavoritesScreen extends StatelessWidget {
+class BusinessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Favorites Screen'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Business'),
+      ),
+      body: Center(
+        child: Text('Business Screen'),
+      ),
     );
   }
 }
 
-class ProfileScreen extends StatelessWidget {
+class SchoolScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Profile Screen'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('School'),
+      ),
+      body: Center(
+        child: Text('School Screen'),
+      ),
     );
   }
 }
-class RestaurantsScreen extends StatelessWidget {
+
+class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Restaurants Screen'),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Settings'),
+      ),
+      body: Center(
+        child: Text('Settings Screen'),
+      ),
+    );
+  }
+}
+
+class ThemeParkScreen extends StatefulWidget {
+  @override
+  _ThemeParkScreenState createState() => _ThemeParkScreenState();
+}
+
+class _ThemeParkScreenState extends State<ThemeParkScreen> {
+  List<dynamic> ridesAndGardens = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadRidesAndGardens();
+  }
+
+  Future<void> loadRidesAndGardens() async {
+    String data = await rootBundle.loadString('assets/rides_and_gardens.json');
+    setState(() {
+      ridesAndGardens = json.decode(data);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Theme Park'),
+      ),
+      body: ListView.builder(
+        itemCount: ridesAndGardens.length,
+        itemBuilder: (context, index) {
+          final item = ridesAndGardens[index];
+          return ListTile(
+            title: Text(item['name']),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailScreen(item: item),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class DetailScreen extends StatelessWidget {
+  final dynamic item;
+
+  const DetailScreen({Key? key, required this.item}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(item['name']),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Description:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(item['description']),
+            SizedBox(height: 20),
+            Text(
+              'Location:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(item['location']),
+            SizedBox(height: 20),
+            Text(
+              'Capacity:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(item['capacity'].toString()),
+          ],
+        ),
+      ),
     );
   }
 }
