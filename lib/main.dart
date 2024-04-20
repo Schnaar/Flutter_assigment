@@ -422,6 +422,40 @@ class _FunScreenState extends State<FunScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Text('Do you need to spend some time waiting for a ride, well have some fun here',
+              style: TextStyle(fontSize: 25.0)),
+              SizedBox(height: 20,),
+              Text('Fun facts',style: TextStyle(fontSize: 20.0)),
+              SizedBox(height: 10,),
+              Text('Fact 1',style: TextStyle(fontSize: 18.0),),
+              SizedBox(height: 5,),
+              Text('Roberts Rodeo was set up in 1997',style: TextStyle(fontSize: 16.0),),
+              Text('Fact 2',style: TextStyle(fontSize: 18.0),),
+              SizedBox(height: 5,),
+              Text('Mr Robert Rodeo is the founder of Roberts Rodeo',style: TextStyle(fontSize: 16.0),),
+              SizedBox(height: 10,),
+              Text('Fact 3',style: TextStyle(fontSize: 18.0),),
+              SizedBox(height: 5,),
+              Text('The signature food at Roberts rodeo is the magic burger with a secret ingrediant',style: TextStyle(fontSize: 16.0),),
+              SizedBox(height: 10,),
+              Text('Fact 4',style: TextStyle(fontSize: 18.0),),
+              SizedBox(height: 5,),
+              Text('Roberts rodeos famous rollercoaster the large one is the 3rd highest rollercoaster in the UK',style: TextStyle(fontSize: 16.0),),
+              SizedBox(height: 10,),
+              Text('Fact 5',style: TextStyle(fontSize: 18.0),),
+              SizedBox(height: 5,),
+              Text('Nobody has ever failed to have fun at Roberts rodeo',style: TextStyle(fontSize: 16.0),),
+              SizedBox(height: 10,),
+              TextButton(
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                ),
+                onPressed: () { Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Quiz()),
+                );},
+                child: Text('Take the quiz'),
+              ),
               Text('Accelerometer Values:',
                 style: TextStyle(fontSize: 20.0),
               ),
@@ -460,6 +494,22 @@ class _FunScreenState extends State<FunScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+class Quiz extends StatelessWidget {
+  const Quiz({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Quiz'),
+      ),
+      body: Center(
+
+        ),
+
     );
   }
 }
