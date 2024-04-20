@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 
 void main() => runApp(const BottomNavigationBarExampleApp());
@@ -165,11 +166,40 @@ class _GeolocationDemoState extends State<HomeScreen> {
     }
     return Scaffold(
       appBar: AppBar(
+
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body:SingleChildScrollView(
+      child:Column(
           children: <Widget>[
+            Text(
+              'Welcome to Roberts rodeo',
+              style: TextStyle(fontSize: 25.0,fontWeight:FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            Text('Where the magic happens',
+            style: TextStyle(fontSize: 25.0)),
+            Image(image: AssetImage('assets/flowers.webp')),
+            SizedBox(height:20),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Welcome to a land of wonder, imagination, and fun here at Roberts rodeo.',
+                    style: TextStyle(fontSize: 17.0),
+                  ),
+                  Text(
+                    'There is tons to do, from thrilling rides to beautiful gardens; there is sure to be something for you to do at this whimsical rocking wonderland.',
+                    style: TextStyle(fontSize: 17.0),
+                  ),
+                  Text('There is tons to do, from thrilling rides to beautiful garden there is sure to be something for you to do at this whimsical rocking wonderland',
+                      style: TextStyle(fontSize: 17.0)),
+                  Text('Get the lowdown on this world of fun where before starting your adventure',
+                      style: TextStyle(fontSize: 17.0)),
+                ],
+              ),
+            ),
             Icon(
               Icons.location_on,
               size: 60.0,
@@ -186,12 +216,10 @@ class _GeolocationDemoState extends State<HomeScreen> {
               style: TextStyle(fontSize: 16.0),
             ),
 
-            const Center(
-              child: Text(
+            Text(
                 "Connection Status:",
                 style: TextStyle(fontSize: 18),
               ),
-            ),
             Center(
               child: Text(
                 connectionStatus,
@@ -358,7 +386,80 @@ class DetailScreen extends StatelessWidget {
     );
   }
 }
+class FunScreen extends StatefulWidget {
+  @override
+  _FunScreenState createState() => _FunScreenState();
+}
 
-class FunScreen extends StatelessWidget{
-  
+class _FunScreenState extends State<FunScreen> {
+  List<dynamic> FunFacts = [];
+  List<double> _accelerometerValues = [0, 0, 0];
+  List<double> _gyroscopeValues = [0, 0, 0];
+
+  @override
+  void initState() {
+    super.initState();
+    accelerometerEvents.listen((AccelerometerEvent event) {
+      setState(() {
+        _accelerometerValues = <double>[event.x, event.y, event.z];
+      });
+    });
+    gyroscopeEvents.listen((GyroscopeEvent event) {
+      setState(() {
+        _gyroscopeValues = [event.x, event.y, event.z];
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Fun page!!!'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text('Accelerometer Values:',
+                style: TextStyle(fontSize: 20.0),
+              ),
+              SizedBox(height: 20.0),
+              Text(
+                'X: ${_accelerometerValues[0].toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Text(
+                'Y: ${_accelerometerValues[1].toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Text(
+                'Z: ${_accelerometerValues[2].toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Text(
+                'Gyroscope Data:',
+                style: TextStyle(fontSize: 20.0),
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                'X: ${_gyroscopeValues[0].toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Text(
+                'Y: ${_gyroscopeValues[1].toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 18.0),
+              ),
+              Text(
+                'Z: ${_gyroscopeValues[2].toStringAsFixed(2)}',
+                style: TextStyle(fontSize: 18.0),
+              ),
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
