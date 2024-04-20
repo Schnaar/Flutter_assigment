@@ -7,10 +7,12 @@ environment:
   sdk: '>=3.3.3 <4.0.0'
 
 dependencies:
+  connectivity_plus: ^6.0.2
   flutter:
     sdk: flutter
   geolocator: ^11.0.0
   http: ^1.2.1
+  sensors_plus: ^5.0.1
 
 
 dev_dependencies:

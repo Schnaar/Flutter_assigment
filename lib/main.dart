@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 
 void main() => runApp(const BottomNavigationBarExampleApp());
@@ -44,7 +45,7 @@ class _BottomNavigationBarExampleState
   static List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     ThemeParkScreen(),
-    SchoolScreen(),
+    FunScreen(),
     SettingsScreen(),
   ];
 
@@ -102,11 +103,19 @@ class HomeScreen extends StatefulWidget {
 
 class _GeolocationDemoState extends State<HomeScreen> {
   String _locationMessage = '';
+  ConnectivityResult _connectivityResult = ConnectivityResult.none;
+
 
   @override
   void initState() {
     super.initState();
     _getLocation();
+    Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> results) {
+      setState(() {
+        _connectivityResult = results.isNotEmpty ? results[0] : ConnectivityResult.none;
+      });
+    });
+
   }
 
   _getLocation() async {
@@ -129,6 +138,31 @@ class _GeolocationDemoState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String connectionStatus = "";
+
+    switch (_connectivityResult) {
+      case ConnectivityResult.mobile:
+        connectionStatus = "Mobile data connection is being used.";
+        break;
+      case ConnectivityResult.wifi:
+        connectionStatus = "Wi-Fi connection is being used.";
+        break;
+      case ConnectivityResult.bluetooth:
+        connectionStatus = "Bluetooth connection is being used.";
+        break;
+      case ConnectivityResult.ethernet:
+        connectionStatus = "Ethernet connection is being used.";
+        break;
+      case ConnectivityResult.other:
+        connectionStatus = "Other connection is being used.";
+        break;
+      case ConnectivityResult.vpn:
+        connectionStatus = "Vpn connection is being used.";
+        break;
+      case ConnectivityResult.none:
+        connectionStatus = "No connection.";
+        break;
+    }
     return Scaffold(
       appBar: AppBar(
       ),
@@ -151,7 +185,25 @@ class _GeolocationDemoState extends State<HomeScreen> {
               _locationMessage,
               style: TextStyle(fontSize: 16.0),
             ),
+
+            const Center(
+              child: Text(
+                "Connection Status:",
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+            Center(
+              child: Text(
+                connectionStatus,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ],
+
         ),
       ),
     );
@@ -217,7 +269,8 @@ class _ThemeParkScreenState extends State<ThemeParkScreen> {
   Future<void> loadRidesAndGardens() async {
     var response;
     try {
-      response = await http.get(Uri.parse('gs://rides-and-gardens.appspot.com'));
+      response = await http.get(Uri.parse('https://birtch.zapto.org/Online.json'));
+      response=response.body;
     } catch (e) {
       print('Failed to fetch data from API. Loading offline data...');
       // Load data from local JSON file if offline
@@ -304,4 +357,8 @@ class DetailScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+class FunScreen extends StatelessWidget{
+  
 }
