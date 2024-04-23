@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 void main() => runApp(const BottomNavigationBarExampleApp());
@@ -497,19 +498,53 @@ class _FunScreenState extends State<FunScreen> {
     );
   }
 }
-class Quiz extends StatelessWidget {
-  const Quiz({super.key});
+
+
+class Quiz extends StatefulWidget {
+  const Quiz({Key? key}) : super(key: key);
+
+  @override
+  State<Quiz> createState() => _QuizState();
+}
+
+
+
+enum awnsers { awnser1, awnser2,awnser3,awnser4 }
+class _QuizState extends State<Quiz> {
+
+  awnsers? _awnser = awnsers.awnser1;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Quiz'),
-      ),
-      body: Center(
-
+    return Material(
+     child:Column(
+      children: <Widget>[
+        ListTile(
+          title: const Text('1998'),
+          leading: Radio<awnsers>(
+            value: awnsers.awnser1,
+            groupValue: _awnser,
+            onChanged: (awnsers? value) {
+              setState(() {
+                _awnser = value;
+              });
+            },
+          ),
         ),
-
+        ListTile(
+          title: const Text('1997'),
+          leading: Radio<awnsers>(
+            value: awnsers.awnser2,
+            groupValue: _awnser,
+            onChanged: (awnsers? value) {
+              setState(() {
+                _awnser = value;
+              });
+            },
+          ),
+        ),
+      ],
+    )
     );
   }
 }
