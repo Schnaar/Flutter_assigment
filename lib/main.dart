@@ -509,42 +509,155 @@ class Quiz extends StatefulWidget {
 
 
 
-enum awnsers { awnser1, awnser2,awnser3,awnser4 }
+enum q1Awnser { awnser1, awnser2,awnser3,awnser4 }
+enum q2Awnser{dath,robert,ryan,reginald}
 class _QuizState extends State<Quiz> {
 
-  awnsers? _awnser = awnsers.awnser1;
+  q1Awnser? _q1awnser = q1Awnser.awnser1;
+  q2Awnser? _q2awnser=q2Awnser.dath;
+  int _score=0;
+  bool _clicked=false;
+  void _calculateScore() {
+    // Calculation logic goes here
+    // For demonstration purposes, let's say the score is incremented by 1 each time the button is clicked
+    setState(() {
+      _score=0;
+      if (_q1awnser==q1Awnser.awnser2){
+        _score+=1;
+      }
+      if (_q2awnser==q2Awnser.robert){
+        _score+=1;
+      }
+      _clicked = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-     child:Column(
-      children: <Widget>[
-        ListTile(
-          title: const Text('1998'),
-          leading: Radio<awnsers>(
-            value: awnsers.awnser1,
-            groupValue: _awnser,
-            onChanged: (awnsers? value) {
-              setState(() {
-                _awnser = value;
-              });
-            },
+    return MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('Quiz'),
           ),
-        ),
-        ListTile(
-          title: const Text('1997'),
-          leading: Radio<awnsers>(
-            value: awnsers.awnser2,
-            groupValue: _awnser,
-            onChanged: (awnsers? value) {
-              setState(() {
-                _awnser = value;
-              });
-            },
-          ),
-        ),
-      ],
-    )
+          body: Center(
+            child:Column(
+              children: <Widget>[
+                Text('Question1: When was Roberts rodeo founded',style: TextStyle(fontSize: 20),),
+              ListTile(
+                title: const Text('1998'),
+                leading: Radio<q1Awnser>(
+                value: q1Awnser.awnser1,
+                groupValue: _q1awnser,
+                onChanged: (q1Awnser? value) {
+                setState(() {
+                  _q1awnser = value;
+                });
+                },
+              ),
+            ),
+              ListTile(
+               title: const Text('1997'),
+                leading: Radio<q1Awnser>(
+                value: q1Awnser.awnser2,
+                groupValue: _q1awnser,
+                onChanged: (q1Awnser? value) {
+                  setState(() {
+                  _q1awnser = value;
+                });
+                },
+              ),
+
+            ),
+              ListTile(
+                title: const Text('2002'),
+                leading: Radio<q1Awnser>(
+                  value: q1Awnser.awnser3,
+                  groupValue: _q1awnser,
+                  onChanged: (q1Awnser? value) {
+                    setState(() {
+                      _q1awnser = value;
+                    });
+                  },
+                ),
+              ),
+              ListTile(
+                title: const Text('1882'),
+                leading: Radio<q1Awnser>(
+                  value: q1Awnser.awnser4,
+                  groupValue: _q1awnser,
+                  onChanged: (q1Awnser? value) {
+                    setState(() {
+                      _q1awnser = value;
+                    });
+                  },
+                ),
+              ),
+                Text('Question1: Who was roberts rodeos founder',style: TextStyle(fontSize: 20),),
+                ListTile(
+                  title: const Text('Dath Vader'),
+                  leading: Radio<q2Awnser>(
+                    value: q2Awnser.dath,
+                    groupValue: _q2awnser,
+                    onChanged: (q2Awnser? value) {
+                      setState(() {
+                        _q2awnser = value;
+                      });
+                    },
+                  ),
+                ),
+                ListTile(
+                  title: const Text('Robert Rodeo'),
+                  leading: Radio<q2Awnser>(
+                    value: q2Awnser.robert,
+                    groupValue: _q2awnser,
+                    onChanged: (q2Awnser? value) {
+                      setState(() {
+                        _q2awnser = value;
+                      });
+                    },
+                  ),
+
+                ),
+                ListTile(
+                  title: const Text('Ryan Rodeo'),
+                  leading: Radio<q2Awnser>(
+                    value: q2Awnser.ryan,
+                    groupValue: _q2awnser,
+                    onChanged: (q2Awnser? value) {
+                      setState(() {
+                        _q2awnser = value;
+                      });
+                    },
+                  ),
+                ),
+                ListTile(
+                  title: const Text('Sir Reginald Rowdejo'),
+                  leading: Radio<q2Awnser>(
+                    value: q2Awnser.reginald,
+                    groupValue: _q2awnser,
+                    onChanged: (q2Awnser? value) {
+                      setState(() {
+                        _q2awnser = value;
+                      });
+                    },
+                  ),
+                ),
+                TextButton(
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  onPressed: () {_calculateScore(); },
+                  child: Text('Submit awnser'),
+                ),
+                if (_clicked)
+                  Text(
+                    'Quiz Score: $_score',
+                    style: TextStyle(fontSize: 24),
+                  ),
+          ],
+        )
+      ),
+    ),
     );
   }
 }
