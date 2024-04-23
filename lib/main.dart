@@ -6,6 +6,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 
 
 void main() => runApp(const BottomNavigationBarExampleApp());
@@ -106,17 +108,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String _locationMessage = '';
   ConnectivityResult _connectivityResult = ConnectivityResult.none;
-
+  LatLng _center = const LatLng(0.0, 0.0);
+  late GoogleMapController mapController;
 
   @override
   void initState() {
     super.initState();
     _getLocation();
-    Connectivity().onConnectivityChanged.listen((
-        List<ConnectivityResult> results) {
+    Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> results) {
       setState(() {
-        _connectivityResult =
-        results.isNotEmpty ? results[0] : ConnectivityResult.none;
+        _connectivityResult = results.isNotEmpty ? results[0] : ConnectivityResult.none;
       });
     });
   }
@@ -130,13 +131,17 @@ class _HomeScreenState extends State<HomeScreen> {
         return Future.error('Location Not Available');
       }
     }
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+
 
     setState(() {
-      _locationMessage =
-      "Latitude: ${position.latitude}, Longitude: ${position.longitude}";
+      _center = LatLng(position.latitude, position.longitude);
+      _locationMessage = "Latitude: ${position.latitude}, Longitude: ${position.longitude}";
     });
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
   }
 
   @override
@@ -166,10 +171,9 @@ class _HomeScreenState extends State<HomeScreen> {
         connectionStatus = "No connection.";
         break;
     }
-    return Scaffold(
-      appBar: AppBar(
 
-      ),
+    return Scaffold(
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -178,8 +182,10 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
-            Text('Where the magic happens',
-                style: TextStyle(fontSize: 25.0)),
+            Text(
+              'Where the magic happens',
+              style: TextStyle(fontSize: 25.0),
+            ),
             Image(image: AssetImage('assets/flowers.webp')),
             SizedBox(height: 20),
             Padding(
@@ -196,29 +202,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     style: TextStyle(fontSize: 17.0),
                   ),
                   Text(
-                      'There is tons to do, from thrilling rides to beautiful garden there is sure to be something for you to do at this whimsical rocking wonderland',
-                      style: TextStyle(fontSize: 17.0)),
+                    'There is tons to do, from thrilling rides to beautiful garden there is sure to be something for you to do at this whimsical rocking wonderland',
+                    style: TextStyle(fontSize: 17.0),
+                  ),
                   Text(
-                      'Get the lowdown on this world of fun where before starting your adventure',
-                      style: TextStyle(fontSize: 17.0)),
+                    'Get the lowdown on this world of fun where before starting your adventure',
+                    style: TextStyle(fontSize: 17.0),
+                  ),
                 ],
               ),
             ),
-            Icon(
-              Icons.location_on,
-              size: 60.0,
-              color: Colors.blue,
+            if (_center.latitude != 0.0 && _center.longitude != 0.0)
+            Container(
+              height: 300, // Adjust height as needed
+
+              child: GoogleMap(
+                onMapCreated: _onMapCreated,
+                initialCameraPosition: CameraPosition(
+                  target: _center,
+                  zoom: 11.0,
+                ),
+              ),
             ),
-            SizedBox(height: 20.0),
-            Text(
-              'Your Current Location is:',
-              style: TextStyle(fontSize: 20.0),
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              _locationMessage,
-              style: TextStyle(fontSize: 16.0),
-            ),
+            SizedBox(height: 20),
 
             Text(
               "Connection Status:",
@@ -235,12 +241,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ],
-
         ),
       ),
     );
   }
 }
+
 
 class SettingsScreen extends StatelessWidget {
   @override
