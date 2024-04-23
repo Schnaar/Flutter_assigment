@@ -100,10 +100,10 @@ class _BottomNavigationBarExampleState
 
 class HomeScreen extends StatefulWidget {
   @override
-  _GeolocationDemoState createState() => _GeolocationDemoState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _GeolocationDemoState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   String _locationMessage = '';
   ConnectivityResult _connectivityResult = ConnectivityResult.none;
 
@@ -112,12 +112,13 @@ class _GeolocationDemoState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _getLocation();
-    Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> results) {
+    Connectivity().onConnectivityChanged.listen((
+        List<ConnectivityResult> results) {
       setState(() {
-        _connectivityResult = results.isNotEmpty ? results[0] : ConnectivityResult.none;
+        _connectivityResult =
+        results.isNotEmpty ? results[0] : ConnectivityResult.none;
       });
     });
-
   }
 
   _getLocation() async {
@@ -169,18 +170,18 @@ class _GeolocationDemoState extends State<HomeScreen> {
       appBar: AppBar(
 
       ),
-      body:SingleChildScrollView(
-      child:Column(
+      body: SingleChildScrollView(
+        child: Column(
           children: <Widget>[
             Text(
               'Welcome to Roberts rodeo',
-              style: TextStyle(fontSize: 25.0,fontWeight:FontWeight.bold),
+              style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             Text('Where the magic happens',
-            style: TextStyle(fontSize: 25.0)),
+                style: TextStyle(fontSize: 25.0)),
             Image(image: AssetImage('assets/flowers.webp')),
-            SizedBox(height:20),
+            SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -194,9 +195,11 @@ class _GeolocationDemoState extends State<HomeScreen> {
                     'There is tons to do, from thrilling rides to beautiful gardens; there is sure to be something for you to do at this whimsical rocking wonderland.',
                     style: TextStyle(fontSize: 17.0),
                   ),
-                  Text('There is tons to do, from thrilling rides to beautiful garden there is sure to be something for you to do at this whimsical rocking wonderland',
+                  Text(
+                      'There is tons to do, from thrilling rides to beautiful garden there is sure to be something for you to do at this whimsical rocking wonderland',
                       style: TextStyle(fontSize: 17.0)),
-                  Text('Get the lowdown on this world of fun where before starting your adventure',
+                  Text(
+                      'Get the lowdown on this world of fun where before starting your adventure',
                       style: TextStyle(fontSize: 17.0)),
                 ],
               ),
@@ -218,9 +221,9 @@ class _GeolocationDemoState extends State<HomeScreen> {
             ),
 
             Text(
-                "Connection Status:",
-                style: TextStyle(fontSize: 18),
-              ),
+              "Connection Status:",
+              style: TextStyle(fontSize: 18),
+            ),
             Center(
               child: Text(
                 connectionStatus,
@@ -234,34 +237,6 @@ class _GeolocationDemoState extends State<HomeScreen> {
           ],
 
         ),
-      ),
-    );
-  }
-}
-
-class BusinessScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Business'),
-      ),
-      body: Center(
-        child: Text('Business Screen'),
-      ),
-    );
-  }
-}
-
-class SchoolScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('School'),
-      ),
-      body: Center(
-        child: Text('School Screen'),
       ),
     );
   }
@@ -419,7 +394,9 @@ class _FunScreenState extends State<FunScreen> {
         appBar: AppBar(
           title: Text('Fun page!!!'),
         ),
-        body: Center(
+      body: SingleChildScrollView(
+        child:Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -495,6 +472,7 @@ class _FunScreenState extends State<FunScreen> {
           ),
         ),
       ),
+      ),
     );
   }
 }
@@ -511,10 +489,15 @@ class Quiz extends StatefulWidget {
 
 enum q1Awnser { awnser1, awnser2,awnser3,awnser4 }
 enum q2Awnser{dath,robert,ryan,reginald}
+enum q3Awnser{magic, hotdog, icream,cookie}
+enum q4Awnser{third,first,fith,last}
+
 class _QuizState extends State<Quiz> {
 
   q1Awnser? _q1awnser = q1Awnser.awnser1;
   q2Awnser? _q2awnser=q2Awnser.dath;
+  q3Awnser? _q3awnser=q3Awnser.magic;
+  q4Awnser? _q4awnser=q4Awnser.third;
   int _score=0;
   bool _clicked=false;
   void _calculateScore() {
@@ -528,6 +511,12 @@ class _QuizState extends State<Quiz> {
       if (_q2awnser==q2Awnser.robert){
         _score+=1;
       }
+      if (_q3awnser==q3Awnser.magic){
+        _score+=1;
+      }
+      if(_q4awnser==q4Awnser.third){
+        _score+=1;
+      }
       _clicked = true;
     });
   }
@@ -539,14 +528,17 @@ class _QuizState extends State<Quiz> {
           appBar: AppBar(
             title: Text('Quiz'),
           ),
-          body: Center(
-            child:Column(
-              children: <Widget>[
-                Text('Question1: When was Roberts rodeo founded',style: TextStyle(fontSize: 20),),
-              ListTile(
-                title: const Text('1998'),
-                leading: Radio<q1Awnser>(
-                value: q1Awnser.awnser1,
+          body: SingleChildScrollView(
+            child:Padding(
+              padding: const EdgeInsets.all(16.0),
+
+              child:Column(
+                children: <Widget>[
+                  Text('Question1: When was Roberts rodeo founded',style: TextStyle(fontSize: 20),),
+                ListTile(
+                  title: const Text('1998'),
+                  leading: Radio<q1Awnser>(
+                  value: q1Awnser.awnser1,
                 groupValue: _q1awnser,
                 onChanged: (q1Awnser? value) {
                 setState(() {
@@ -642,6 +634,106 @@ class _QuizState extends State<Quiz> {
                     },
                   ),
                 ),
+                Text('Question1=3: What is the signature food',style: TextStyle(fontSize: 20),),
+                ListTile(
+                  title: const Text('Magic burger'),
+                  leading: Radio<q3Awnser>(
+                    value: q3Awnser.magic,
+                    groupValue: _q3awnser,
+                    onChanged: (q3Awnser? value) {
+                      setState(() {
+                        _q3awnser = value;
+                      });
+                    },
+                  ),
+                ),
+                ListTile(
+                  title: const Text('Space cookie'),
+                  leading: Radio<q3Awnser>(
+                    value: q3Awnser.cookie,
+                    groupValue: _q3awnser,
+                    onChanged: (q3Awnser? value) {
+                      setState(() {
+                        _q3awnser = value;
+                      });
+                    },
+                  ),
+
+                ),
+                ListTile(
+                  title: const Text('Sensual hot dog'),
+                  leading: Radio<q3Awnser>(
+                    value: q3Awnser.hotdog,
+                    groupValue: _q3awnser,
+                    onChanged: (q3Awnser? value) {
+                      setState(() {
+                        _q3awnser = value;
+                      });
+                    },
+                  ),
+                ),
+                ListTile(
+                  title: const Text('Sticky icecream'),
+                  leading: Radio<q3Awnser>(
+                    value: q3Awnser.icream,
+                    groupValue: _q3awnser,
+                    onChanged: (q3Awnser? value) {
+                      setState(() {
+                        _q3awnser = value;
+                      });
+                    },
+                  ),
+                ),
+                  Text('Question1=3: What rank is the big one in tallest rollercoasts in the UK',style: TextStyle(fontSize: 20),),
+                  ListTile(
+                    title: const Text('Third'),
+                    leading: Radio<q4Awnser>(
+                      value: q4Awnser.third,
+                      groupValue: _q4awnser,
+                      onChanged: (q4Awnser? value) {
+                        setState(() {
+                          _q4awnser = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('First'),
+                    leading: Radio<q4Awnser>(
+                      value: q4Awnser.first,
+                      groupValue: _q4awnser,
+                      onChanged: (q4Awnser? value) {
+                        setState(() {
+                          _q4awnser = value;
+                        });
+                      },
+                    ),
+
+                  ),
+                  ListTile(
+                    title: const Text('Last'),
+                    leading: Radio<q4Awnser>(
+                      value: q4Awnser.last,
+                      groupValue: _q4awnser,
+                      onChanged: (q4Awnser? value) {
+                        setState(() {
+                          _q4awnser = value;
+                        });
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Fith'),
+                    leading: Radio<q4Awnser>(
+                      value: q4Awnser.fith,
+                      groupValue: _q4awnser,
+                      onChanged: (q4Awnser? value) {
+                        setState(() {
+                          _q4awnser = value;
+                        });
+                      },
+                    ),
+                  ),
                 TextButton(
                   style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
@@ -656,6 +748,7 @@ class _QuizState extends State<Quiz> {
                   ),
           ],
         )
+    )
       ),
     ),
     );
