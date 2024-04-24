@@ -111,6 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
   LatLng _center = const LatLng(0.0, 0.0);
   late GoogleMapController mapController;
 
+
+
   @override
   void initState() {
     super.initState();
@@ -137,6 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _center = LatLng(position.latitude, position.longitude);
       _locationMessage = "Latitude: ${position.latitude}, Longitude: ${position.longitude}";
+
+
     });
   }
 
@@ -212,6 +216,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
+            SizedBox(height:20),
+            Text('Where to find us',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
             if (_center.latitude != 0.0 && _center.longitude != 0.0)
             Container(
               height: 300, // Adjust height as needed
@@ -222,6 +228,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   target: _center,
                   zoom: 11.0,
                 ),
+                markers: {
+                  const Marker(
+                    markerId: const MarkerId("Roberts Rodeo"),
+                    position: LatLng(52.738655658190375, -2.24369719112312),
+                  ),
+                }
               ),
             ),
             SizedBox(height: 20),
@@ -396,9 +408,12 @@ class _FunScreenState extends State<FunScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.system,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Fun page!!!'),
+          title:Center(child:Text('Fun page!!!')) ,
         ),
       body: SingleChildScrollView(
         child:Padding(
@@ -530,6 +545,9 @@ class _QuizState extends State<Quiz> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.system,
         home: Scaffold(
           appBar: AppBar(
             title: Text('Quiz'),
