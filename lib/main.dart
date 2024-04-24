@@ -15,19 +15,33 @@ void main() => runApp(const BottomNavigationBarExampleApp());
 class BottomNavigationBarExampleApp extends StatelessWidget {
   const BottomNavigationBarExampleApp({Key? key}) : super(key: key);
 
+
   @override
+
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        systemNavigationBarColor: Colors.transparent,
-      ),
+
+    final ThemeData customLightTheme = ThemeData(
+      // Define primary color
+      primaryColor: Color(0xFFE7C6FF),
+      // Define accent color
+      hintColor: Color(0xFFE7C6FF),
+      // Define scaffold background color
+      scaffoldBackgroundColor:Colors.white,
+      // Define other theme properties as needed
+      // For example, text theme
+      textTheme: TextTheme(
+        // Define your text styles
+        // For example, body1
+        bodyText1: TextStyle(
+          color: Colors.black, // Define your text color
+        ),
+      )
     );
 
     return MaterialApp(
       title: 'Roberts rodeo',
       themeMode: ThemeMode.system, // Use the system theme mode
-      theme: ThemeData.light(), // Default light theme
+      theme: customLightTheme, // Default light theme
       darkTheme: ThemeData.dark(), // Default dark theme
       home: BottomNavigationBarExample(),
     );
@@ -71,30 +85,28 @@ class _BottomNavigationBarExampleState
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            backgroundColor: Color(0xFFE7C6FF),
+            icon: Icon(Icons.home, color: Colors.black), // Set icon color to black
             label: 'Home',
-            backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(Icons.business, color: Colors.black), // Set icon color to black
             label: 'Rides',
-            backgroundColor: Colors.green,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
+            icon: Icon(Icons.school, color: Colors.black), // Set icon color to black
             label: 'Fun Screen',
-            backgroundColor: Colors.purple,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.settings, color: Colors.black), // Set icon color to black
             label: 'Settings',
-            backgroundColor: Colors.pink,
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Color(0xBBD0FF),
         onTap: _onItemTapped,
       ),
+
     );
   }
 }
@@ -181,6 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+
             Text(
               'Welcome to Roberts rodeo',
               style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
@@ -194,7 +207,14 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
+              child:Container(
+                color: Theme.of(context).primaryColor,
+                child:Padding(
+                  padding: const EdgeInsets.all(5.0),
+
+                child: Column(
+
+
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
@@ -205,15 +225,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     'There is tons to do, from thrilling rides to beautiful gardens; there is sure to be something for you to do at this whimsical rocking wonderland.',
                     style: TextStyle(fontSize: 17.0),
                   ),
-                  Text(
-                    'There is tons to do, from thrilling rides to beautiful garden there is sure to be something for you to do at this whimsical rocking wonderland',
-                    style: TextStyle(fontSize: 17.0),
-                  ),
+
                   Text(
                     'Get the lowdown on this world of fun where before starting your adventure',
                     style: TextStyle(fontSize: 17.0),
                   ),
                 ],
+              ),
+              ),
               ),
             ),
             SizedBox(height:20),
@@ -255,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-    );
+      );
   }
 }
 
