@@ -67,7 +67,7 @@ class _BottomNavigationBarExampleState
     HomeScreen(),
     ThemeParkScreen(),
     FunScreen(),
-    SettingsScreen(),
+    MapScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -80,6 +80,7 @@ class _BottomNavigationBarExampleState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: const Text('Roberts rodeo'),
       ),
       body: Center(
@@ -282,15 +283,29 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 
-class SettingsScreen extends StatelessWidget {
+class MapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Settings'),
+      body: SingleChildScrollView(
+        child:Center(
+        child: Column(
+            children: <Widget>[
+        Text('Roberts rodeo has 5 unique zones, each one with its own unique theme',style: TextStyle(fontSize: 18),),
+              SizedBox(height: 20,),
+              Image(image: AssetImage('assets/images/Map.png')),
+              Container(
+                width: double.infinity,
+                color:Colors.green,
+                child: Text('Fairlyand',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+
+              ),
+              Image(image: AssetImage('assets/images/Fairyland.png'))
+        ]
+
+        )
+
       ),
-      body: Center(
-        child: Text('Settings Screen'),
       ),
     );
   }
@@ -346,7 +361,7 @@ class _ThemeParkScreenState extends State<ThemeParkScreen> {
 
           } else {
 
-            backgroundColor= Theme.of(context).colorScheme.secondary;
+            backgroundColor= Theme.of(context).colorScheme.background;
 
           }// Alternating background colors
           return Container(
@@ -389,19 +404,19 @@ class DetailScreen extends StatelessWidget {
               'Description:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            Text(item['description']),
+            Text(item['description'],style: TextStyle(fontSize: 16),),
             SizedBox(height: 20),
             Text(
               'Location:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            Text(item['location']),
+            Text(item['location'],style: TextStyle(fontSize: 16)),
             SizedBox(height: 20),
             Text(
               'Capacity:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            Text(item['capacity'].toString()),
+            Text(item['capacity'].toString(),style: TextStyle(fontSize: 16)),
             SizedBox(height: 20),
             Text(
               'Wait time:',
