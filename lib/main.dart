@@ -207,11 +207,11 @@ class _HomeScreenState extends State<HomeScreen> {
               'Where the magic happens',
               style: TextStyle(fontSize: 25.0),
             ),
-            Image(image: AssetImage('assets/images/flowers.webp')),
-            SizedBox(height: 20),
             Padding(
-              padding: const EdgeInsets.all(16.0),
-              child:Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              child:Image(image: AssetImage('assets/images/flowers.webp')),
+            ),
+              Container(
                 color: Theme.of(context).primaryColor,
                 child:Padding(
                   padding: const EdgeInsets.all(5.0),
@@ -238,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               ),
               ),
-            ),
+
             SizedBox(height:20),
             Text('Where to find us',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
             if (_center.latitude != 0.0 && _center.longitude != 0.0)
@@ -296,11 +296,50 @@ class MapScreen extends StatelessWidget {
               Image(image: AssetImage('assets/images/Map.png')),
               Container(
                 width: double.infinity,
-                color:Colors.green,
-                child: Text('Fairlyand',style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                color:Colors.lightGreen,
+                child:Center(
+                child: Text('Fairlyand',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+                )
 
               ),
-              Image(image: AssetImage('assets/images/Fairyland.png'))
+              Image(image: AssetImage('assets/images/Fairyland.png')),
+              SizedBox(height: 20,),
+              Container(
+                width: double.infinity,
+                color:Colors.redAccent,
+                child:Center(
+                child: Text('Hotland',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+                ),
+                ),
+              Image(image: AssetImage('assets/images/Hotland.png')),
+              SizedBox(height: 20,),
+              Container(
+                width: double.infinity,
+                color:Colors.blue,
+                child:Center(
+                child: Text('Waterland',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+                )
+              ),
+              Image(image: AssetImage('assets/images/Waterland.png')),
+              SizedBox(height: 20,),
+              Container(
+                width: double.infinity,
+                color:Colors.purpleAccent,
+                child:Center(
+                child: Text('Spaceland',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+                )
+              ),
+              Image(image: AssetImage('assets/images/Spaceland.png')),
+              SizedBox(height: 20,),
+              Container(
+                width: double.infinity,
+                color:Colors.pinkAccent,
+                child:Center(
+                child: Text('Rodeo',style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
+                )
+              ),
+              Image(image: AssetImage('assets/images/Rodeo.png')),
+
         ]
 
         )
@@ -395,39 +434,41 @@ class DetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(item['name']),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+      child:Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Image(image: AssetImage('assets/images/${item["image"]}')),
+            SizedBox(height: 60),
             Text(
               'Description:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            Text(item['description'],style: TextStyle(fontSize: 16),),
+            Text(item['description'],style: TextStyle(fontSize: 18),),
             SizedBox(height: 20),
             Text(
               'Location:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            Text(item['location'],style: TextStyle(fontSize: 16)),
+            Text(item['location'],style: TextStyle(fontSize: 18)),
             SizedBox(height: 20),
             Text(
               'Capacity:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            Text(item['capacity'].toString(),style: TextStyle(fontSize: 16)),
+            Text(item['capacity'].toString(),style: TextStyle(fontSize: 18)),
             SizedBox(height: 20),
             Text(
               'Wait time:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            Text(item['wait time'].toString()),
-            SizedBox(height: 60),
-            Image(image: AssetImage('assets/images/${item["image"]}')),
+            Text(item['wait time'].toString(),style: TextStyle(fontSize: 18)),
           ],
         ),
       ),
+    )
     );
   }
 }
@@ -463,9 +504,6 @@ class _FunScreenState extends State<FunScreen> {
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.system,
       home: Scaffold(
-        appBar: AppBar(
-          title:Center(child:Text('Fun page!!!')) ,
-        ),
       body: SingleChildScrollView(
         child:Padding(
           padding: const EdgeInsets.all(16.0),
@@ -475,26 +513,26 @@ class _FunScreenState extends State<FunScreen> {
               Text('Do you need to spend some time waiting for a ride, well have some fun here',
               style: TextStyle(fontSize: 25.0)),
               SizedBox(height: 20,),
-              Text('Fun facts',style: TextStyle(fontSize: 20.0)),
+              Text('Fun facts',style: TextStyle(fontSize: 22.0,fontWeight: FontWeight.bold),),
               SizedBox(height: 10,),
-              Text('Fact 1',style: TextStyle(fontSize: 18.0),),
+              Text('Fact 1',style: TextStyle(fontSize: 20.0),),
               SizedBox(height: 5,),
-              Text('Roberts Rodeo was set up in 1997',style: TextStyle(fontSize: 16.0),),
-              Text('Fact 2',style: TextStyle(fontSize: 18.0),),
+              Text('Roberts Rodeo was set up in 1997',style: TextStyle(fontSize: 20.0),),
+              Text('Fact 2',style: TextStyle(fontSize: 20.0),),
               SizedBox(height: 5,),
               Text('Mr Robert Rodeo is the founder of Roberts Rodeo',style: TextStyle(fontSize: 16.0),),
               SizedBox(height: 10,),
-              Text('Fact 3',style: TextStyle(fontSize: 18.0),),
+              Text('Fact 3',style: TextStyle(fontSize: 20.0),),
               SizedBox(height: 5,),
               Text('The signature food at Roberts rodeo is the magic burger with a secret ingrediant',style: TextStyle(fontSize: 16.0),),
               SizedBox(height: 10,),
-              Text('Fact 4',style: TextStyle(fontSize: 18.0),),
+              Text('Fact 4',style: TextStyle(fontSize: 20.0),),
               SizedBox(height: 5,),
               Text('Roberts rodeos famous rollercoaster the large one is the 3rd highest rollercoaster in the UK',style: TextStyle(fontSize: 16.0),),
               SizedBox(height: 10,),
-              Text('Fact 5',style: TextStyle(fontSize: 18.0),),
+              Text('Fact 5',style: TextStyle(fontSize: 20.0),),
               SizedBox(height: 5,),
-              Text('Nobody has ever failed to have fun at Roberts rodeo',style: TextStyle(fontSize: 16.0),),
+              Text('Nobody has ever failed to have fun at Roberts rodeo',style: TextStyle(fontSize: 20.0),),
               SizedBox(height: 10,),
               TextButton(
                 style: ButtonStyle(
@@ -659,7 +697,7 @@ class _QuizState extends State<Quiz> {
                   },
                 ),
               ),
-                Text('Question1: Who was roberts rodeos founder',style: TextStyle(fontSize: 20),),
+                Text('Question2: Who was roberts rodeos founder',style: TextStyle(fontSize: 20),),
                 ListTile(
                   title: const Text('Dath Vader'),
                   leading: Radio<q2Awnser>(
@@ -709,7 +747,7 @@ class _QuizState extends State<Quiz> {
                     },
                   ),
                 ),
-                Text('Question1=3: What is the signature food',style: TextStyle(fontSize: 20),),
+                Text('Question3: What is the signature food',style: TextStyle(fontSize: 20),),
                 ListTile(
                   title: const Text('Magic burger'),
                   leading: Radio<q3Awnser>(
@@ -759,7 +797,7 @@ class _QuizState extends State<Quiz> {
                     },
                   ),
                 ),
-                  Text('Question1=3: What rank is the big one in tallest rollercoasts in the UK',style: TextStyle(fontSize: 20),),
+                  Text('Question4: What rank is the big one in tallest rollercoasts in the UK',style: TextStyle(fontSize: 20),),
                   ListTile(
                     title: const Text('Third'),
                     leading: Radio<q4Awnser>(
