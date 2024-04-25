@@ -24,9 +24,11 @@ class BottomNavigationBarExampleApp extends StatelessWidget {
       // Define primary color
       primaryColor: Color(0xFFE7C6FF),
       // Define accent color
-      hintColor: Color(0xFFE7C6FF),
+      colorScheme: ColorScheme.light(
+        secondary: Color(0xFF8FD8FF), // Secondary color
+      ),// Secondary color
       // Define scaffold background color
-      scaffoldBackgroundColor:Colors.white,
+      scaffoldBackgroundColor: Colors.white,
       // Define other theme properties as needed
       // For example, text theme
       textTheme: TextTheme(
@@ -35,8 +37,9 @@ class BottomNavigationBarExampleApp extends StatelessWidget {
         bodyText1: TextStyle(
           color: Colors.black, // Define your text color
         ),
-      )
+      ),
     );
+
 
     return MaterialApp(
       title: 'Roberts rodeo',
@@ -203,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
               'Where the magic happens',
               style: TextStyle(fontSize: 25.0),
             ),
-            Image(image: AssetImage('assets/flowers.webp')),
+            Image(image: AssetImage('assets/images/flowers.webp')),
             SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -327,6 +330,7 @@ class _ThemeParkScreenState extends State<ThemeParkScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Theme Park'),
@@ -335,7 +339,19 @@ class _ThemeParkScreenState extends State<ThemeParkScreen> {
         itemCount: ridesAndGardens.length,
         itemBuilder: (context, index) {
           final item = ridesAndGardens[index];
-          return ListTile(
+          Color backgroundColor;
+          if(index % 2 == 0) {
+
+            backgroundColor=Theme.of(context).primaryColor;
+
+          } else {
+
+            backgroundColor= Theme.of(context).colorScheme.secondary;
+
+          }// Alternating background colors
+          return Container(
+              color: backgroundColor,
+          child: ListTile(
             title: Text(item['name']),
             onTap: () {
               Navigator.push(
@@ -345,6 +361,7 @@ class _ThemeParkScreenState extends State<ThemeParkScreen> {
                 ),
               );
             },
+          ),
           );
         },
       ),
@@ -392,7 +409,7 @@ class DetailScreen extends StatelessWidget {
             ),
             Text(item['wait time'].toString()),
             SizedBox(height: 60),
-            Image(image: AssetImage('assets/Images/${item["image"]}')),
+            Image(image: AssetImage('assets/images/${item["image"]}')),
           ],
         ),
       ),
