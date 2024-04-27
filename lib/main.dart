@@ -25,18 +25,35 @@ class BottomNavigationBarExampleApp extends StatelessWidget {
       primaryColor: Color(0xFFE7C6FF),
       // Define accent color
       colorScheme: ColorScheme.light(
-        secondary: Color(0xFF8FD8FF), // Secondary color
+        secondary: Colors.black, // Secondary color
       ),// Secondary color
       // Define scaffold background color
       scaffoldBackgroundColor: Colors.white,
       // Define other theme properties as needed
       // For example, text theme
       textTheme: TextTheme(
-        // Define your text styles
-        // For example, body1
-        bodyText1: TextStyle(
-          color: Colors.black, // Define your text color
-        ),
+        bodyText1: TextStyle(),
+        bodyText2: TextStyle(),
+      ).apply(
+        bodyColor: Colors.black,
+      ),
+    );
+    final ThemeData customDarkTheme = ThemeData(
+      // Define primary color
+      primaryColor: Color(0xFF480ca8),
+      // Define accent color
+      colorScheme: ColorScheme.light(
+        secondary: Colors.white, // Secondary color
+      ),// Secondary color
+      // Define scaffold background color
+      scaffoldBackgroundColor: Colors.black,
+      // Define other theme properties as needed
+      // For example, text theme
+      textTheme: TextTheme(
+        bodyText1: TextStyle(),
+        bodyText2: TextStyle(),
+      ).apply(
+        bodyColor: Colors.white,
       ),
     );
 
@@ -45,7 +62,7 @@ class BottomNavigationBarExampleApp extends StatelessWidget {
       title: 'Roberts rodeo',
       themeMode: ThemeMode.system, // Use the system theme mode
       theme: customLightTheme, // Default light theme
-      darkTheme: ThemeData.dark(), // Default dark theme
+      darkTheme: customDarkTheme, // Default dark theme
       home: BottomNavigationBarExample(),
     );
   }
@@ -87,22 +104,22 @@ class _BottomNavigationBarExampleState
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            backgroundColor: Color(0xFFE7C6FF),
-            icon: Icon(Icons.home, color: Colors.black), // Set icon color to black
+            backgroundColor: Theme.of(context).primaryColor,
+            icon: Icon(Icons.home, color: Theme.of(context).colorScheme.secondary,),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business, color: Colors.black), // Set icon color to black
+            icon: Icon(Icons.business,  color: Theme.of(context).colorScheme.secondary,),
             label: 'Rides',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school, color: Colors.black), // Set icon color to black
+            icon: Icon(Icons.school,  color: Theme.of(context).colorScheme.secondary,),
             label: 'Fun Screen',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings, color: Colors.black), // Set icon color to black
+            icon: Icon(Icons.settings, color: Theme.of(context).colorScheme.secondary,),
             label: 'Settings',
           ),
         ],
@@ -193,7 +210,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -515,24 +531,72 @@ class _FunScreenState extends State<FunScreen> {
               SizedBox(height: 20,),
               Text('Fun facts',style: TextStyle(fontSize: 22.0,fontWeight: FontWeight.bold),),
               SizedBox(height: 10,),
-              Text('Fact 1',style: TextStyle(fontSize: 20.0),),
-              SizedBox(height: 5,),
-              Text('Roberts Rodeo was set up in 1997',style: TextStyle(fontSize: 20.0),),
+              Container(
+                color:Theme.of(context).primaryColor,
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('Fact 1', style: TextStyle(fontSize: 20.0)),
+                    SizedBox(height: 5),
+                    Text('Roberts Rodeo was founded in the year of 1997', style: TextStyle(fontSize: 20.0)),
+                  ],
+                ),
+              ),
+              SizedBox(height: 10,),
+              Container(
+                color:Theme.of(context).primaryColor,
+                  padding: EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+
+
               Text('Fact 2',style: TextStyle(fontSize: 20.0),),
               SizedBox(height: 5,),
-              Text('Mr Robert Rodeo is the founder of Roberts Rodeo',style: TextStyle(fontSize: 16.0),),
+              Text('Mr Robert Rodeo is the founder of Roberts Rodeo',style: TextStyle(fontSize: 20.0),),
+                ]
+              )
+              ),
               SizedBox(height: 10,),
+            Container(
+              color:Theme.of(context).primaryColor,
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
               Text('Fact 3',style: TextStyle(fontSize: 20.0),),
               SizedBox(height: 5,),
-              Text('The signature food at Roberts rodeo is the magic burger with a secret ingrediant',style: TextStyle(fontSize: 16.0),),
+              Text('The signature food at Roberts rodeo is the magic burger with a secret ingrediant',style: TextStyle(fontSize: 20.0),),
+              ]
+              ),
+            ),
               SizedBox(height: 10,),
+            Container(
+              color:Theme.of(context).primaryColor,
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
               Text('Fact 4',style: TextStyle(fontSize: 20.0),),
               SizedBox(height: 5,),
-              Text('Roberts rodeos famous rollercoaster the large one is the 3rd highest rollercoaster in the UK',style: TextStyle(fontSize: 16.0),),
+              Text('Roberts rodeos famous rollercoaster the large one is the 3rd highest rollercoaster in the UK',style: TextStyle(fontSize: 20.0),),
+              ]
+              ),
+            ),
               SizedBox(height: 10,),
+              Container(
+              color:Theme.of(context).primaryColor,
+                padding: EdgeInsets.all(10.0),
+                child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
               Text('Fact 5',style: TextStyle(fontSize: 20.0),),
               SizedBox(height: 5,),
               Text('Nobody has ever failed to have fun at Roberts rodeo',style: TextStyle(fontSize: 20.0),),
+              ]
+                ),
+              ),
               SizedBox(height: 10,),
               TextButton(
                 style: ButtonStyle(
