@@ -7,10 +7,21 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 
-void main() => runApp(const BottomNavigationBarExampleApp());
+
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const BottomNavigationBarExampleApp()
+
+);
+}
 
 class BottomNavigationBarExampleApp extends StatelessWidget {
   const BottomNavigationBarExampleApp({Key? key}) : super(key: key);
@@ -58,12 +69,13 @@ class BottomNavigationBarExampleApp extends StatelessWidget {
     );
 
 
+
     return MaterialApp(
       title: 'Roberts rodeo',
       themeMode: ThemeMode.system, // Use the system theme mode
       theme: customLightTheme, // Default light theme
       darkTheme: customDarkTheme, // Default dark theme
-      home: BottomNavigationBarExample(),
+      home: WidgetTree(),
     );
   }
 }
@@ -92,6 +104,11 @@ class _BottomNavigationBarExampleState
       _selectedIndex = index;
     });
   }
+  final User? user=Auth().currentUser;
+  Future<void> signOut() async{
+    await Auth().signOut();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -99,6 +116,10 @@ class _BottomNavigationBarExampleState
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: const Text('Roberts rodeo'),
+        actions: <Widget>[
+          ElevatedButton(onPressed: signOut, child: Text('sign out'))
+        ],
+
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -143,6 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ConnectivityResult _connectivityResult = ConnectivityResult.none;
   LatLng _center = const LatLng(0.0, 0.0);
   late GoogleMapController mapController;
+
 
 
 
@@ -929,5 +951,134 @@ class _QuizState extends State<Quiz> {
       ),
     ),
     );
+  }
+}
+class Auth{
+  final FirebaseAuth _firebaseAuth= FirebaseAuth.instance;
+  User? get currentUser=>_firebaseAuth.currentUser;
+  Stream<User?> get authStateChanges=> _firebaseAuth.authStateChanges();
+  Future<void> signInWithEmailAndPassword({
+    required String email,
+    required String password,
+})async{
+    await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+  }
+  Future<void> createUserWithEmailAndPassword({
+    required String email,
+    required String password,
+  })async{
+    await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+  }
+  Future<void> signOut() async{
+    await _firebaseAuth.signOut();
+  }
+
+
+}
+
+class LoginPage extends StatefulWidget{
+  const LoginPage({Key? key}) : super(key : key);
+  @override
+  State<LoginPage> createState()=> _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage>{
+  String? errorMessage='';
+  bool isLogin = true;
+  final TextEditingController _controllerEmail=TextEditingController();
+  final TextEditingController _controllerPassword=TextEditingController();
+  Future<void> signInWithEmailAndPassword() async{
+    try{
+      await Auth().signInWithEmailAndPassword(email: _controllerEmail.text,
+          password: _controllerPassword.text);
+    } on FirebaseAuthException catch (e){
+      setState(() {
+        errorMessage=e.message;
+      });
+    }
+  }
+  Future<void> createUserWithEmailAndPassword() async{
+    try{
+      await Auth().createUserWithEmailAndPassword(email: _controllerEmail.text,
+          password: _controllerPassword.text);
+    } on FirebaseAuthException catch (e){
+      setState(() {
+        errorMessage=e.message;
+      });
+    }
+  }
+  Widget _entryFeild(
+      String title,
+      TextEditingController controller
+      ){
+    return TextField(
+      controller: controller,
+      decoration:InputDecoration(
+        labelText: title
+      ),
+    );
+  }
+  Widget _errorMessage(){
+    return Text(errorMessage==''? '' : 'Humm ? $errorMessage');
+  }
+  Widget _submitButton(){
+    return ElevatedButton(onPressed:
+        isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword,
+        child: Text(isLogin ? 'Login': 'Register')
+    );
+
+  }
+  
+  Widget _loginOrRegisterButton(){
+    return TextButton(
+      onPressed:(){
+      setState(() {
+      isLogin=!isLogin;
+    });
+      }, child: Text(isLogin ? 'Register instead':'Login instead'),);
+  }
+
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      body:Container(
+        height: double.infinity,
+        width: double.infinity,
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _entryFeild('email', _controllerEmail),
+            _entryFeild('password', _controllerPassword),
+            _errorMessage(),
+            _submitButton(),
+            _loginOrRegisterButton(),
+          ],
+        ),
+      )
+    );
+  }
+}
+
+class WidgetTree extends StatefulWidget{
+  const WidgetTree({Key? key}): super(key: key);
+  @override
+  State<WidgetTree> createState()=> _WidgetTreeState();
+  
+}
+
+class _WidgetTreeState extends State<WidgetTree>{
+  @override
+  Widget build(BuildContext context){
+    return StreamBuilder(stream: Auth().authStateChanges,
+    builder: (context,snapshot){
+      if (snapshot.hasData){
+        return BottomNavigationBarExample();
+  } else{
+        return const LoginPage();
+  }
+  }
+  );
   }
 }

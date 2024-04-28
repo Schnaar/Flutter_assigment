@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "134936416310",
+    "project_id": "theme-park-976a2",
+    "storage_bucket": "theme-park-976a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134936416310:android:f3091f8aece2eec5790897",
+        "android_client_info": {
+          "package_name": "com.example.not_doing_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXu7kAIgyynSZvQhioaNLzhb9PqD3d_4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
